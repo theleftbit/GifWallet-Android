@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.theleftbit.gifwallet.R
 
 class GifListAdapter: RecyclerView.Adapter<GifListAdapter.GifListItemViewHolder>() {
@@ -17,7 +18,9 @@ class GifListAdapter: RecyclerView.Adapter<GifListAdapter.GifListItemViewHolder>
     override fun getItemCount() = items.count()
 
     override fun onBindViewHolder(holder: GifListItemViewHolder, position: Int) {
-        //holder.imageView.load(items[position])
+        Glide.with(holder.imageView.context)
+                .load(items[position])
+                .into(holder.imageView)
     }
 
     class GifListItemViewHolder(val imageView: ImageView): RecyclerView.ViewHolder(imageView)
