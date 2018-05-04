@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.theleftbit.gifwallet.R
 
 class GifListAdapter: RecyclerView.Adapter<GifListAdapter.GifListItemViewHolder>() {
@@ -20,6 +21,7 @@ class GifListAdapter: RecyclerView.Adapter<GifListAdapter.GifListItemViewHolder>
     override fun onBindViewHolder(holder: GifListItemViewHolder, position: Int) {
         Glide.with(holder.imageView.context)
                 .load(items[position])
+                .apply(RequestOptions.centerCropTransform())
                 .into(holder.imageView)
     }
 
