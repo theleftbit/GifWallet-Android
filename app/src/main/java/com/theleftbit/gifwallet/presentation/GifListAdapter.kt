@@ -9,7 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.theleftbit.gifwallet.R
 
 class GifListAdapter: RecyclerView.Adapter<GifListAdapter.GifListItemViewHolder>() {
-    var items: List<String> = ArrayList()
+    private val items: MutableList<String> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GifListItemViewHolder {
         val imageView = LayoutInflater.from(parent.context).inflate(R.layout.item_gif_list, parent, false) as ImageView
@@ -23,6 +23,11 @@ class GifListAdapter: RecyclerView.Adapter<GifListAdapter.GifListItemViewHolder>
                 .load(items[position])
                 .apply(RequestOptions.centerCropTransform())
                 .into(holder.imageView)
+    }
+
+    fun add(gifUrl: String) {
+        items.add(gifUrl)
+        notifyItemInserted(items.size - 1)
     }
 
     class GifListItemViewHolder(val imageView: ImageView): RecyclerView.ViewHolder(imageView)
