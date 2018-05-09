@@ -18,7 +18,7 @@ class GifListFragment: Fragment() {
         var adapter = GifListAdapter()
         fragmentGifListRecyclerView.layoutManager = GridLayoutManager(context, 2)
         fragmentGifListRecyclerView.adapter = adapter
-        adapter.items = mutableListOf<String>().apply {
+        adapter.apply {
             add("https://media.giphy.com/media/xTiTnqUxyWbsAXq7Ju/giphy.gif")
             add("https://media.giphy.com/media/xTiTnqUxyWbsAXq7Ju/giphy.gif")
             add("https://media.giphy.com/media/xTiTnqUxyWbsAXq7Ju/giphy.gif")
@@ -35,6 +35,5 @@ class GifListFragment: Fragment() {
             add("https://media.giphy.com/media/xTiTnqUxyWbsAXq7Ju/giphy.gif")
             add("https://media.giphy.com/media/xTiTnqUxyWbsAXq7Ju/giphy.gif")
         }
-        adapter.notifyDataSetChanged()
     }
 }
