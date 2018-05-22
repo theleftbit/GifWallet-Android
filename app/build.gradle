@@ -38,6 +38,7 @@ dependencies {
         transitive=true
     }
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation 'com.beust:klaxon:3.0.1'
 }
 repositories {
     mavenCentral()
