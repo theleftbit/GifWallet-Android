@@ -1,4 +1,4 @@
-package com.theleftbit.gifwallet.presentation
+package com.theleftbit.gifwallet.presentation.giflist
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
