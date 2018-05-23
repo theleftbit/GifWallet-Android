@@ -10,15 +10,9 @@ class GifListViewModel: ViewModel() {
     val urls = MutableLiveData<List<String>>()
 
     init {
-        val client = GPHApiClient("API-KEY")
+        val client = GPHApiClient("kw7ABCKe5AfWxPu0qLcjaN7MpQdqAPES")
         client.trending(MediaType.gif, null, null, null) { result, _ ->
-            result?.data.let {
-                urls.postValue(ArrayList<String>().apply {
-                    result.data.forEach {
-                        add(it.images.original.gifUrl)
-                    }
-                })
-            }
+            urls.postValue(result.data.map { it.images.original.gifUrl })
         }
     }
 }
