@@ -2,25 +2,22 @@ package com.theleftbit.gifwallet.presentation.giflist
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.giphy.sdk.core.models.enums.MediaType
-import com.giphy.sdk.core.network.api.GPHApiClient
 import com.theleftbit.gifwallet.data.giphy.api.GifGiphyApiRepository
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.async
 
 class GifListViewModel: ViewModel() {
-
+    private val gifRepository = GifGiphyApiRepository()
     val urls = MutableLiveData<List<String>>()
-    val gifRepository = GifGiphyApiRepository()
 
     init {
-        val client = GPHApiClient("API-KEY")
-        client.trending(MediaType.gif, null, null, null) { result, _ ->
-            result?.data.let {
-                urls.postValue(ArrayList<String>().apply {
-                    result.data.forEach {
-                        add(it.images.original.gifUrl)
-                    }
-                })
-            }
+        async(CommonPool) {
+            val gifs = gifRepository.getTrending()
+            urls.postValue(ArrayList<String>().apply {
+                gifs.forEach {
+                    add(it.sampleUrl)
+                }
+            })
         }
     }
 }
