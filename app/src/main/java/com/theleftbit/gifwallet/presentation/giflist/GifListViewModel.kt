@@ -11,9 +11,24 @@ class GifListViewModel: ViewModel() {
     val urls = MutableLiveData<List<String>>()
 
     init {
+        getTrending()
+    }
+
+    private fun getTrending() {
         async(CommonPool) {
             val gifs = gifRepository.getTrending()
             urls.postValue(gifs.map { it.sampleUrl })
         }
+    }
+
+    fun onSearchUpdated(query: String) {
+        async(CommonPool) {
+            val gifs = gifRepository.search(query)
+            urls.postValue(gifs.map { it.sampleUrl })
+        }
+    }
+
+    fun onSearchEmpty() {
+        getTrending()
     }
 }

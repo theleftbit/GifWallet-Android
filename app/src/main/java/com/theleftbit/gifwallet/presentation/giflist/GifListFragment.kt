@@ -5,6 +5,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_gif_list.*
 
 class GifListFragment: Fragment() {
     private val adapter = GifListAdapter()
+    private var model: GifListViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         LayoutInflater.from(context).inflate(R.layout.fragment_gif_list, container, false)
@@ -21,6 +24,7 @@ class GifListFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
         setUpViewModel()
+        setUpSearchEditText()
     }
 
     private fun setUpRecyclerView() {
@@ -29,10 +33,26 @@ class GifListFragment: Fragment() {
     }
 
     private fun setUpViewModel() {
-        val model = ViewModelProviders.of(this).get(GifListViewModel::class.java)
+        model = ViewModelProviders.of(this).get(GifListViewModel::class.java)
         val observer = Observer<List<String>> {
-            adapter.addAll(it)
+            adapter.setAll(it)
         }
-        model.urls.observe(this, observer)
+        model?.urls?.observe(this, observer)
+    }
+
+    private fun setUpSearchEditText() {
+        fragmentGifListSearchEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) {
+                    model?.onSearchEmpty()
+                } else {
+                    model?.onSearchUpdated(s.toString())
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
 }
