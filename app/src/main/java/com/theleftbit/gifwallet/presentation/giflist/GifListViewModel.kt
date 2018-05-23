@@ -13,11 +13,7 @@ class GifListViewModel: ViewModel() {
     init {
         async(CommonPool) {
             val gifs = gifRepository.getTrending()
-            urls.postValue(ArrayList<String>().apply {
-                gifs.forEach {
-                    add(it.sampleUrl)
-                }
-            })
+            urls.postValue(gifs.map { it.sampleUrl })
         }
     }
 }
