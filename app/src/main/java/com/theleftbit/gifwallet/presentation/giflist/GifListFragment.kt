@@ -1,4 +1,4 @@
-package com.theleftbit.gifwallet.presentation
+package com.theleftbit.gifwallet.presentation.giflist
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders

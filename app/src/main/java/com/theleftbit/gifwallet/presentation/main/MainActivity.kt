@@ -1,4 +1,4 @@
-package com.theleftbit.gifwallet.presentation
+package com.theleftbit.gifwallet.presentation.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
