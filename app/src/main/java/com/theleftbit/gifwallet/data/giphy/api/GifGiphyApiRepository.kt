@@ -12,13 +12,9 @@ class GifGiphyApiRepository: GifRepository {
     private val gson: Gson = Gson()
 
     override fun getTrending(): List<GifModel> {
-        val result = mutableListOf<GifModel>()
         val spec = "http://api.giphy.com/v1/gifs/trending?api_key=kw7ABCKe5AfWxPu0qLcjaN7MpQdqAPES"
         val stringResult = URL(spec).readText()
         val gifs = gson.fromJson<ResultGifsGiphyDataModel>(stringResult, ResultGifsGiphyDataModel::class.java)
-        gifs.data.forEach {
-            result.add(mapper.map(it))
-        }
-        return result
+        return gifs.data.map { mapper.map(it) }
     }
 }
