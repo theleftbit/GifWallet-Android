@@ -4,25 +4,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragmentGifListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-    <android.support.design.widget.AppBarLayout
+        android:paddingTop="64dp"
+        android:clipToPadding="false"/>
+    
+    <android.support.v7.widget.CardView
+        android:id="@+id/searchCardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/fragmentGifListRecyclerView"
+        app:layout_anchorGravity="top"
+        android:layout_margin="8dp"
+        >
+    
         <android.support.v7.widget.SearchView
             android:id="@+id/searchViewQuery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:popupTheme="@style/AppTheme"
-            app:queryHint="Search event"
+            app:queryHint="Search gif"
             app:iconifiedByDefault="false"/>
-        
-    </android.support.design.widget.AppBarLayout>
-
+    
+    </android.support.v7.widget.CardView>
+    
 </android.support.design.widget.CoordinatorLayout>
