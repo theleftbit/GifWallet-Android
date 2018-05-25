@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.SearchView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -41,18 +42,20 @@ class GifListFragment: Fragment() {
     }
 
     private fun setUpSearchEditText() {
-        fragmentGifListSearchEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (s.isNullOrEmpty()) {
+        searchViewQuery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrBlank()) {
                     model?.onSearchEmpty()
-                } else {
-                    model?.onSearchUpdated(s.toString())
                 }
+                return true
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                model?.onSearchUpdated(query.toString())
+                return true
+            }
         })
+
+
     }
 }

@@ -14,15 +14,15 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/fragmentGifListSearchEditText"
+        
+        <android.support.v7.widget.SearchView
+            android:id="@+id/searchViewQuery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:expandedTitleGravity="top"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:layout_collapseMode="pin"/>
-
+            app:popupTheme="@style/AppTheme"
+            app:queryHint="Search event"
+            app:iconifiedByDefault="false"/>
+        
     </android.support.design.widget.AppBarLayout>
 
 </android.support.design.widget.CoordinatorLayout>
