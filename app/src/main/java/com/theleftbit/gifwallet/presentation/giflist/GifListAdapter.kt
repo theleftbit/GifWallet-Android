@@ -30,11 +30,11 @@ class GifListAdapter: RecyclerView.Adapter<GifListAdapter.GifListItemViewHolder>
         notifyItemInserted(items.size - 1)
     }
 
-    fun addAll(gifUrls: List<String>?) {
+    fun setAll(gifUrls: List<String>?) {
         gifUrls?.let {
-            val positionStart = items.size
+            items.clear()
             items.addAll(gifUrls)
-            notifyItemRangeInserted(positionStart, gifUrls.size)
+            notifyDataSetChanged()
         }
     }
 
