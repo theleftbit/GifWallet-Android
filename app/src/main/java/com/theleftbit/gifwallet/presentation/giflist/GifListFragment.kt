@@ -1,7 +1,5 @@
 package com.theleftbit.gifwallet.presentation.giflist
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -15,14 +13,14 @@ import kotlinx.android.synthetic.main.fragment_gif_list.fragmentGifListRecyclerV
 import kotlinx.android.synthetic.main.fragment_gif_list.searchCardView
 import kotlinx.android.synthetic.main.fragment_gif_list.searchViewQuery
 
-class GifListFragment : Fragment() {
+class GifListFragment : Fragment(), GifListView {
 
     companion object {
         private const val MAX_Y_TRANSLATION = 0f
     }
 
     private val adapter = GifListAdapter()
-    private var model: GifListViewModel? = null
+    private lateinit var presenter: GifListPresenter
 
     private val searchContainerHeight by lazy {
         (searchCardView.height.toFloat() + (searchCardView.layoutParams as ViewGroup.MarginLayoutParams).topMargin)
@@ -33,9 +31,15 @@ class GifListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter = GifListPresenter(this)
         setUpRecyclerView()
-        setUpViewModel()
         setUpSearchEditText()
+        presenter.onViewReady()
+    }
+
+    override fun onDestroy() {
+        presenter.onDestroyView()
+        super.onDestroy()
     }
 
     private fun setUpRecyclerView() {
@@ -57,27 +61,23 @@ class GifListFragment : Fragment() {
         })
     }
 
-    private fun setUpViewModel() {
-        model = ViewModelProviders.of(this).get(GifListViewModel::class.java)
-        val observer = Observer<List<String>> {
-            adapter.setAll(it)
-        }
-        model?.urls?.observe(this, observer)
-    }
-
     private fun setUpSearchEditText() {
         searchViewQuery.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrBlank()) {
-                    model?.onSearchEmpty()
+                    presenter.onSearchEmpty()
                 }
                 return true
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                model?.onSearchUpdated(query.toString())
+                presenter.onSearchUpdated(query.toString())
                 return true
             }
         })
+    }
+
+    override fun updateGifList(gifs: List<String>) {
+        adapter.setAll(gifs)
     }
 }
